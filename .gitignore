@@ -5,4 +5,5 @@ yarn-error.log
 .vscode
 dist/
 src/data/
+src/uploads
 database-data/
