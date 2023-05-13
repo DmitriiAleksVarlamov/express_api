@@ -34,7 +34,10 @@ class FileService {
     const file = await this.fileDbModule.findStatsById(id);
 
     if (!file) {
-      throw new FileNotFoundError('Cannot find a file by ID');
+      throw new FileNotFoundError(
+        'Cannot find a file by ID',
+        StatusCode.BadRequest,
+      );
     }
 
     return this.prepareStatsData(file);
