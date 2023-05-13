@@ -1,5 +1,5 @@
 {
-  "name": "erp-service",
+  "name": "express_api",
   "version": "0.0.1",
   "main": "dist/app.js",
   "repository": "https://github.com/RobinBobin-big-belled-Ban/express-service.git",
