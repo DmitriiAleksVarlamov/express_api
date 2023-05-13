@@ -1,29 +1,21 @@
 import { authService, AuthService } from '../services/auth.service';
 import { Request, Response } from 'express';
-import { StatusCode } from '../constants';
-import { MatchPasswordsError } from '../errors/match-passwords-error';
-import { UserNotFoundError } from '../errors/user-not-found-error';
+import { utils, UtilsController } from './utils/utils.controller';
 
 class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private utils: UtilsController,
+  ) {}
 
   public async signUp(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
       const user = await this.authService.createUser({ email, password });
-      user.toObject();
 
       return res.send({ email: user.email, id: user.id });
     } catch (error) {
-      if (error.code) {
-        return res.status(StatusCode.Forbidden).send({
-          message: error.message,
-        });
-      }
-
-      return res
-        .status(StatusCode.ServerError)
-        .send({ message: error.message });
+      this.utils.prepareErrorResponse(res, error);
     }
   }
 
@@ -35,20 +27,11 @@ class AuthController {
 
       res.send(user);
     } catch (error) {
-      if (
-        error instanceof MatchPasswordsError ||
-        error instanceof UserNotFoundError
-      ) {
-        return res
-          .status(StatusCode.BadRequest)
-          .send({ message: error.message });
-      }
-
-      res.status(StatusCode.ServerError).send({ message: error.message });
+      this.utils.prepareErrorResponse(res, error);
     }
   }
 }
 
-const authController = new AuthController(authService);
+const authController = new AuthController(authService, utils);
 
 export { authController, AuthController };

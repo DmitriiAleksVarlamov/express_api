@@ -2,9 +2,13 @@ import { fileService, FileService } from '../services/file.service';
 import { Request, Response } from 'express';
 import { StatusCode } from '../constants';
 import { UploadedFile } from 'express-fileupload';
+import { utils, UtilsController } from './utils/utils.controller';
 
 class FileController {
-  constructor(private fileService: FileService) {}
+  constructor(
+    private fileService: FileService,
+    private utils: UtilsController,
+  ) {}
 
   public async upload(req: Request, res: Response) {
     try {
@@ -15,7 +19,7 @@ class FileController {
 
       res.send(stats);
     } catch (error) {
-      this.prepareErrorResponse(res, error);
+      this.utils.prepareErrorResponse(res, error);
     }
   }
 
@@ -27,7 +31,7 @@ class FileController {
 
       res.send(stats);
     } catch (error) {
-      this.prepareErrorResponse(res, error);
+      this.utils.prepareErrorResponse(res, error);
     }
   }
 
@@ -42,7 +46,7 @@ class FileController {
 
       res.send(files);
     } catch (error) {
-      this.prepareErrorResponse(res, error);
+      this.utils.prepareErrorResponse(res, error);
     }
   }
 
@@ -54,16 +58,11 @@ class FileController {
 
       res.status(StatusCode.NoContent).send({ isSucceeded: true });
     } catch (error) {
-      this.prepareErrorResponse(res, error);
+      this.utils.prepareErrorResponse(res, error);
     }
-  }
-
-  private prepareErrorResponse(res: Response, error) {
-    const code = error.code || StatusCode.ServerError;
-    res.status(code).send({ message: error.message });
   }
 }
 
-const fileController = new FileController(fileService);
+const fileController = new FileController(fileService, utils);
 
 export { fileController, FileController };

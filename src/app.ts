@@ -8,8 +8,7 @@ import session from 'express-session';
 import fileUpload from 'express-fileupload';
 import passport from 'passport';
 
-// import fileRouter from './routes/file';
-import { notFoundError, serverError } from './handlers/errors';
+import { notFoundError, serverError } from './errors/handlers/errors';
 import { apiRouter } from './routers/api.router';
 
 // CONSTANTS
@@ -28,7 +27,6 @@ app.use(cors());
 app.use(passport.initialize());
 
 /* ROUTES */
-// app.use('/file', fileRouter);
 app.use('/', apiRouter);
 
 /* ERRORS */

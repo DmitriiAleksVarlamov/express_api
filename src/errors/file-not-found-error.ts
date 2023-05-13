@@ -1,20 +1,6 @@
-import { StatusCode } from "../constants";
+import { BaseError } from './base-error';
 
-class FileNotFoundError extends Error {
-  cause?: Error;
-  code?: number;
-
-  constructor(message: string | Error, code?: StatusCode) {
-    if (message instanceof Error) {
-      super(message.message);
-      this.cause = message;
-      this.code = code;
-    } else {
-      super(message);
-      this.code = code;
-    }
-  }
-
+class FileNotFoundError extends BaseError {
   override get name(): string {
     return 'FileNotFoundError';
   }

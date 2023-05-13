@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf ./dist && npx tsc",
-    "start": "yarn db:up && yarn build && node dist/app.js",
+    "start": "yarn build && node dist/app.js",
     "db:up": "docker-compose up -d",
     "db:rm": "docker-compose rm -s -f -v && ",
     "db:restart": "yarn db:rm && yarn db:up",

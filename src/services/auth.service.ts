@@ -6,6 +6,8 @@ import jwt from 'jsonwebtoken';
 import config, { IConfig } from 'config';
 import { MatchPasswordsError } from '../errors/match-passwords-error';
 import { UserNotFoundError } from '../errors/user-not-found-error';
+import { StatusCode } from '../constants';
+import { MongoServerError } from '../errors/mongo-server-error';
 
 class AuthService {
   constructor(
@@ -19,14 +21,18 @@ class AuthService {
   }
 
   public async createUser({ email, password }: UserCreateDbModuleDto) {
-    return this.userDbModule.createUser({ email, password });
+    try {
+      return await this.userDbModule.createUser({ email, password });
+    } catch (error) {
+      throw new MongoServerError(error.message, StatusCode.BadRequest);
+    }
   }
 
   public async checkUser({ password, email }: UserCheckDbModuleDto) {
     const user = await this.userDbModule.findUser(email);
 
     if (!user) {
-      throw new UserNotFoundError('user not found');
+      throw new UserNotFoundError('user not found', StatusCode.BadRequest);
     }
 
     const isPasswordMatched = await bcrypt.compare(password, user.password);
@@ -43,7 +49,7 @@ class AuthService {
       return { token };
     }
 
-    throw new MatchPasswordsError('wrong password');
+    throw new MatchPasswordsError('wrong password', StatusCode.BadRequest);
   }
 }
 
