@@ -6,9 +6,11 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import fileUpload from 'express-fileupload';
+import passport from 'passport';
 
-import fileRouter from './routes/file';
+// import fileRouter from './routes/file';
 import { notFoundError, serverError } from './handlers/errors';
+import { apiRouter } from './routers/api.router';
 
 // CONSTANTS
 const PORT = config.get('server.port');
@@ -23,9 +25,11 @@ app.use(fileUpload(config.get('app.fileUpload')));
 app.use(cookieParser(SECRET_KEY));
 app.use(session(config.get('app.session')));
 app.use(cors());
+app.use(passport.initialize());
 
 /* ROUTES */
-app.use('/file', fileRouter);
+// app.use('/file', fileRouter);
+app.use('/', apiRouter);
 
 /* ERRORS */
 app.use(notFoundError);

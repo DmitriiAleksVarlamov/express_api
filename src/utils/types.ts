@@ -1,19 +1,14 @@
 import fileUpload from 'express-fileupload';
+import { Types, Document } from 'mongoose';
 
-// type File = {
-//   name: string;
-//   size: number;
-//   mimetype: string;
-//   ext: string;
-//   timestamp: Date;
-//   pathname: string;
-// };
+type FindDbResult<T> = Document<unknown, any, T> & T & { _id: Types.ObjectId };
 
-type FileData = {
-  dataBuffer: fileUpload.UploadedFile['data'] | null;
+type FileDb = {
+  data: fileUpload.UploadedFile['data'];
   name: fileUpload.UploadedFile['name'];
   size: fileUpload.UploadedFile['size'];
   mimetype: fileUpload.UploadedFile['mimetype'];
+  createdAt: number;
 };
 
-export { /* File,*/ FileData };
+export { FileDb, FindDbResult };

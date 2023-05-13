@@ -7,7 +7,10 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf ./dist && npx tsc",
-    "start": "yarn build && node dist/app.js",
+    "start": "yarn db:up && yarn build && node dist/app.js",
+    "db:up": "docker-compose up -d",
+    "db:rm": "docker-compose rm -s -f -v && ",
+    "db:restart": "yarn db:rm && yarn db:up",
     "start:dev": "nodemon",
     "lint": "npx eslint ./src",
     "format": "npx eslint ./src --fix"
@@ -33,6 +36,7 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "config": "^3.3.8",
     "cookie-parser": "^1.4.6",
@@ -40,6 +44,10 @@
     "express": "^4.18.2",
     "express-fileupload": "^1.4.0",
     "express-session": "^1.17.3",
-    "mongoose": "^6.8.0"
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.8.0",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0"
   }
 }

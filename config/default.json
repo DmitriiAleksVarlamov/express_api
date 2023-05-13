@@ -20,5 +20,6 @@
             "abortOnLimit": true,
             "uploadTimeout": 20000
         }
-    }
+    },
+    "auth": { "jwtKey": "jwt-key" }
 }
