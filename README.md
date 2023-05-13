@@ -14,6 +14,6 @@ $ yarn install
 
 $ yarn db:up
 
-$ yarn start
+$ yarn start:dev
 
 ```
