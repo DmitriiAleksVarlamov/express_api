@@ -25,17 +25,17 @@ class AuthMiddleware {
         try {
           const user = await this.authService.findUser(jwtPayload.email);
 
-          const sessionId = this.authService.getSessionValue(
+          const device = this.authService.getSessionValue(
             req,
             Sessions.userAgent,
           );
 
-          const isGadgetExist = this.authService.checkGadgets(
-            user.gadgets,
-            sessionId,
+          const isContainDevice = this.authService.checkDevices(
+            user.devices,
+            device,
           );
 
-          if (isGadgetExist) {
+          if (isContainDevice) {
             return done(null, user);
           }
 

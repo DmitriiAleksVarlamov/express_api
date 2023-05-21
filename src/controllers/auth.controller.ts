@@ -37,7 +37,7 @@ class AuthController {
       // @ts-ignore
       const { email } = req.user;
 
-      await this.authService.removeGadget(req, email);
+      await this.authService.removeAuthorizedDevice(req, email);
 
       res.send('Logout was successfully');
     } catch (error) {

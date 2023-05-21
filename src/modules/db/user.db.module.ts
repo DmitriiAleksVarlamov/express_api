@@ -19,7 +19,7 @@ class UserDbModule {
     );
   }
 
-  public async setAuthGadgets(email: string, gadgets: string[]) {
+  public async updateAuthorizedDevices(email: string, gadgets: string[]) {
     return this.userModel.findOneAndUpdate({ email }, { gadgets });
   }
 }

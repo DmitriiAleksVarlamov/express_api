@@ -44,8 +44,8 @@ class AuthService {
         expiresIn: '1h',
       });
 
-      const sessionId = this.getSessionValue(req, Sessions.userAgent);
-      const isGadgetExist = this.checkGadgets(user.gadgets, sessionId);
+      const sessionDevice = this.getSessionValue(req, Sessions.userAgent);
+      const isGadgetExist = this.checkDevices(user.devices, sessionDevice);
 
       if (!isGadgetExist) {
         const agentHash = await this.setSessionValue(req, Sessions.userAgent);
@@ -73,8 +73,8 @@ class AuthService {
     return userAgentHash;
   }
 
-  public checkGadgets(agents: string[], sessionId: string): boolean {
-    const index = agents.indexOf(sessionId);
+  public checkDevices(devices: string[], currentDevice: string): boolean {
+    const index = devices.indexOf(currentDevice);
 
     return Boolean(~index);
   }
@@ -83,16 +83,16 @@ class AuthService {
     return req.session[name];
   }
 
-  public async removeGadget(req: Request, email: string) {
-    const sessionId = this.getSessionValue(req, Sessions.userAgent);
+  public async removeAuthorizedDevice(req: Request, email: string) {
+    const sessionValue = this.getSessionValue(req, Sessions.userAgent);
     const user = await this.findUser(email);
-    const authedGadgets = this.filterGadgets(sessionId, user.gadgets);
+    const authorizedDevices = this.filterDevices(user.devices, sessionValue);
 
-    await this.userDbModule.setAuthGadgets(email, authedGadgets);
+    await this.userDbModule.updateAuthorizedDevices(email, authorizedDevices);
   }
 
-  private filterGadgets(sessionId: string, gadgets: string[]): string[] {
-    return gadgets.filter((gadget) => gadget !== sessionId);
+  private filterDevices(devices: string[], currentDevice: string): string[] {
+    return devices.filter((device) => device !== currentDevice);
   }
 }
 
