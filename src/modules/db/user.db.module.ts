@@ -11,6 +11,17 @@ class UserDbModule {
   public async findUser(email: string) {
     return this.userModel.findOne({ email });
   }
+
+  public async updateGadget(email: string, gadget: string) {
+    return this.userModel.findOneAndUpdate(
+      { email },
+      { $push: { gadgets: gadget } },
+    );
+  }
+
+  public async setAuthGadgets(email: string, gadgets: string[]) {
+    return this.userModel.findOneAndUpdate({ email }, { gadgets });
+  }
 }
 
 const userDbModule = new UserDbModule(UserModel);

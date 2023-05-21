@@ -7,4 +7,8 @@ enum StatusCode {
   ServerError = 500,
 }
 
-export { StatusCode };
+enum Sessions {
+  userAgent = 'agent',
+}
+
+export { StatusCode, Sessions };

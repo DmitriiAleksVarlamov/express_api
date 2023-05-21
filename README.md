@@ -17,3 +17,9 @@ $ yarn db:up
 $ yarn start:dev
 
 ```
+
+```bash
+# UI for Database 
+
+http://localhost:8081/
+```

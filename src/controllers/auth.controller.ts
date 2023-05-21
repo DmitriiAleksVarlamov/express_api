@@ -23,9 +23,23 @@ class AuthController {
     try {
       const { password, email } = req.body;
 
-      const user = await this.authService.checkUser({ email, password });
+      const user = await this.authService.checkUser({ email, password, req });
 
       res.send(user);
+    } catch (error) {
+      this.utils.prepareErrorResponse(res, error);
+    }
+  }
+
+  public async logOut(req: Request, res: Response) {
+    try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const { email } = req.user;
+
+      await this.authService.removeGadget(req, email);
+
+      res.send('Logout was successfully');
     } catch (error) {
       this.utils.prepareErrorResponse(res, error);
     }

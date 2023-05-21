@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 export type User = {
   email: string;
   password: string;
+  gadgets: string[];
 };
 
 const UserSchema = new Schema<User>({
@@ -15,6 +16,9 @@ const UserSchema = new Schema<User>({
   password: {
     type: String,
     required: true,
+  },
+  gadgets: {
+    type: [String],
   },
 });
 
