@@ -8,5 +8,6 @@
     "outDir": "dist",
     "removeComments": true
   },
+  "include": ["src/**/*"],
   "lib": ["es2015"]
 }

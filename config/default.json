@@ -1,10 +1,6 @@
 {
-    "mongo": {
-        "url": "mongodb://root:password@localhost:27017/?retryWrites=true&w=majority",
-        "url1": "mongodb+srv://robin:LvsSVJhPJgHuaG8@cluster0.k5i8ubl.mongodb.net/?retryWrites=true&w=majority"
-    },
     "server": {
-        "port": 1234
+        "port": 2345
     },
     "app": {
         "cookieSecret": "secret key",
@@ -13,13 +9,6 @@
             "secret": "secret key",
             "resave": true,
             "saveUninitialized": true
-        },
-        "fileUpload": {
-            "limits": { "fileSize": 10485760 },
-            "debug": true,
-            "abortOnLimit": true,
-            "uploadTimeout": 20000
         }
-    },
-    "auth": { "jwtKey": "jwt-key" }
+    }
 }
